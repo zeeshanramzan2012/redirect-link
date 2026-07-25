@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Think Before You Click — SSGC Cyber Awareness</title>
+<meta name="description" content="SSGC Ltd phishing awareness — spot the red flags, know the rules, report suspicious emails.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202B;
+    --ink-soft:#425466;
+    --cream:#FFFDF9;
+    --orange:#F7941E;
+    --orange-dark:#D97706;
+    --teal:#0EA5A5;
+    --teal-dark:#0B7F7F;
+    --coral:#E63946;
+    --coral-dark:#C22532;
+    --yellow:#FFC845;
+    --green:#2ECC71;
+    --green-dark:#20A85B;
+    --card-shadow: 0 6px 20px rgba(22,32,43,0.08);
+    --radius: 18px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+  }
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; margin:0; }
+  a{ color:inherit; }
+  img,svg{ display:block; max-width:100%; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  a.skip-link{
+    position:absolute; left:-999px; top:0; background:var(--ink); color:#fff;
+    padding:10px 16px; border-radius:8px; z-index:100;
+  }
+  a.skip-link:focus{ left:16px; top:16px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(160deg, var(--orange) 0%, #FDBB53 55%, var(--yellow) 100%);
+    padding:72px 0 96px;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(22,32,43,0.12);
+    color:#3a2400;
+    font-weight:700;
+    font-size:0.82rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:8px 14px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    font-weight:800;
+    color:#20130a;
+    line-height:1.05;
+    margin-bottom:20px;
+  }
+  .hero h1 span{ color:#fff; -webkit-text-stroke: 2px #20130a; }
+  .hero p.lead{
+    font-size:1.15rem;
+    color:#3a2400;
+    max-width:46ch;
+    margin-bottom:28px;
+    font-weight:500;
+  }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Inter', sans-serif;
+    font-weight:700;
+    font-size:1rem;
+    padding:14px 24px;
+    border-radius:14px;
+    text-decoration:none;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn:active{ transform: translateY(0); }
+  .btn-dark{ background:var(--ink); color:#fff; }
+  .btn-dark:hover{ box-shadow:0 10px 24px rgba(22,32,43,0.35); }
+  .btn-outline{ background:transparent; border-color:#20130a; color:#20130a; }
+
+  /* hero hook/envelope signature graphic */
+  .hero-art{ position:relative; display:flex; justify-content:center; }
+  .hero-art svg{ width:100%; max-width:340px; }
+
+  @keyframes hookPull{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-6px) rotate(-3deg); }
+  }
+  @keyframes envelopeShake{
+    0%,85%,100%{ transform: translateX(0); }
+    88%{ transform: translateX(-3px); }
+    91%{ transform: translateX(3px); }
+    94%{ transform: translateX(-2px); }
+  }
+  .hook-group{ animation: hookPull 3.2s ease-in-out infinite; transform-origin: 70% 10%; }
+  .envelope-group{ animation: envelopeShake 3.2s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce){
+    .hook-group, .envelope-group{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{ padding:80px 0; }
+  .section-head{ max-width:640px; margin:0 auto 44px; text-align:center; }
+  .section-head .tag{
+    font-weight:700; font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .section-head h2{ font-size:clamp(1.8rem,3.4vw,2.4rem); margin:10px 0 12px; }
+  .section-head p{ color:var(--ink-soft); font-size:1.05rem; }
+
+  /* ---------- RED FLAGS GRID ---------- */
+  .flags-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:22px;
+  }
+  .flag-card{
+    background:#fff;
+    border-radius:var(--radius);
+    padding:26px 24px;
+    box-shadow:var(--card-shadow);
+    border-top:6px solid var(--card-color, var(--coral));
+  }
+  .flag-card .icon{
+    width:46px; height:46px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    background: color-mix(in srgb, var(--card-color, var(--coral)) 16%, white);
+    margin-bottom:16px;
+  }
+  .flag-card h3{ font-size:1.15rem; margin-bottom:8px; }
+  .flag-card p{ color:var(--ink-soft); font-size:0.96rem; }
+
+  /* URL comparison callout */
+  .url-compare{
+    margin-top:56px;
+    background:#101820;
+    border-radius:var(--radius);
+    padding:32px;
+    color:#e8edf2;
+  }
+  .url-compare h3{ color:#fff; font-size:1.2rem; margin-bottom:18px; }
+  .url-row{
+    display:flex; align-items:center; gap:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.98rem;
+    background:rgba(255,255,255,0.05);
+    padding:14px 16px;
+    border-radius:10px;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .url-row:last-child{ margin-bottom:0; }
+  .url-tag{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:0.75rem;
+    padding:4px 10px;
+    border-radius:999px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .url-tag.real{ background:rgba(46,204,113,0.18); color:#5fe08a; }
+  .url-tag.fake{ background:rgba(230,57,70,0.18); color:#ff8891; }
+  .url-row .domain-bad{ color:#ff8891; font-weight:600; }
+
+  /* ---------- DO / DON'T ---------- */
+  .rules-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:26px;
+  }
+  .rules-card{ border-radius:var(--radius); padding:30px; }
+  .rules-card.do{ background: color-mix(in srgb, var(--green) 12%, white); border:2px solid color-mix(in srgb, var(--green) 40%, white); }
+  .rules-card.dont{ background: color-mix(in srgb, var(--coral) 10%, white); border:2px solid color-mix(in srgb, var(--coral) 35%, white); }
+  .rules-card h3{
+    display:flex; align-items:center; gap:10px;
+    font-size:1.3rem; margin-bottom:18px;
+  }
+  .rules-card h3 .badge{
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:1.1rem; flex-shrink:0;
+  }
+  .rules-card.do h3 .badge{ background:var(--green-dark); }
+  .rules-card.dont h3 .badge{ background:var(--coral-dark); }
+  .rules-card ul{ margin:0; padding:0; list-style:none; }
+  .rules-card li{
+    display:flex; gap:10px; padding:9px 0;
+    font-size:0.98rem; color:var(--ink);
+    border-bottom:1px solid rgba(22,32,43,0.08);
+  }
+  .rules-card li:last-child{ border-bottom:none; }
+  .rules-card li::before{ content:'—'; color:var(--ink-soft); flex-shrink:0; }
+
+  /* ---------- RESPONSE STEPS (genuine sequence → numbered) ---------- */
+  .steps{
+    counter-reset: step;
+    display:grid;
+    gap:18px;
+  }
+  .step{
+    display:grid;
+    grid-template-columns: 56px 1fr;
+    gap:20px;
+    align-items:flex-start;
+    background:#fff;
+    border-radius:var(--radius);
+    padding:22px 26px;
+    box-shadow:var(--card-shadow);
+  }
+  .step-num{
+    counter-increment: step;
+    width:44px; height:44px; border-radius:50%;
+    background:var(--orange);
+    color:#20130a;
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800; font-size:1.2rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-num::before{ content: counter(step); }
+  .step h3{ font-size:1.1rem; margin-bottom:6px; }
+  .step p{ color:var(--ink-soft); margin:0; font-size:0.96rem; }
+
+  /* ---------- REPORT / FOOTER ---------- */
+  .report{
+    background:var(--ink);
+    color:#fff;
+    border-radius:24px;
+    padding:44px;
+    text-align:center;
+    margin-top:20px;
+  }
+  .report h2{ font-size:1.7rem; margin-bottom:12px; color:#fff; }
+  .report p{ color:#c7d0da; max-width:52ch; margin:0 auto 24px; }
+  .report .contact{
+    font-family:'JetBrains Mono', monospace;
+    font-size:1.1rem;
+    background:rgba(255,255,255,0.08);
+    display:inline-block;
+    padding:12px 20px;
+    border-radius:12px;
+    color:var(--yellow);
+  }
+
+  footer{
+    padding:36px 0 50px;
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:0.88rem;
+  }
+  footer .brand{ font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--ink); }
+
+  @media (max-width: 860px){
+    .hero .wrap{ grid-template-columns: 1fr; }
+    .hero-art{ order:-1; max-width:220px; margin:0 auto; }
+    .flags-grid{ grid-template-columns: 1fr 1fr; }
+    .rules-grid{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px){
+    .flags-grid{ grid-template-columns: 1fr; }
+    .step{ grid-template-columns: 44px 1fr; padding:18px; }
+    .report{ padding:28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">🎣 SSGC Cyber Awareness</span>
+      <h1>Stop.<br>Think.<br><span>Don't</span> click.</h1>
+      <p class="lead">One careless click can hand over your password, your data, and SSGC's systems to a stranger. Here's how to spot it before it happens.</p>
+      <div class="hero-ctas">
+        <a href="#flags" class="btn btn-dark">See the red flags</a>
+        <a href="#report" class="btn btn-outline">Report an email</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <g class="envelope-group">
+          <rect x="40" y="110" width="180" height="120" rx="10" fill="#fff" stroke="#20130a" stroke-width="5"/>
+          <path d="M40 118 L130 185 L220 118" fill="none" stroke="#20130a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="175" cy="205" r="9" fill="#E63946"/>
+          <text x="175" y="210" font-family="Baloo 2, sans-serif" font-size="12" font-weight="800" fill="#fff" text-anchor="middle">!</text>
+        </g>
+        <g class="hook-group">
+          <path d="M235 40 L235 130 Q235 165 205 165 Q180 165 180 143" fill="none" stroke="#425466" stroke-width="9" stroke-linecap="round"/>
+          <circle cx="235" cy="34" r="11" fill="none" stroke="#425466" stroke-width="8"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<main id="main">
+
+  <section class="section" id="flags">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag" style="color:var(--coral)">Know the signs</span>
+        <h2>The 6 red flags of a phishing email</h2>
+        <p>Scammers rely on you not looking closely. Slow down and check for these.</p>
+      </div>
+
+      <div class="flags-grid">
+        <div class="flag-card" style="--card-color: var(--coral);">
+          <div class="icon">⏰</div>
+          <h3>Urgency &amp; pressure</h3>
+          <p>"Act within 24 hours or your account will be suspended." Real requests rarely demand instant action.</p>
+        </div>
+        <div class="flag-card" style="--card-color: var(--orange);">
+          <div class="icon">✉️</div>
+          <h3>Mismatched sender address</h3>
+          <p>The display name says "SSGC HR" but the actual address is a strange, unrelated domain.</p>
+        </div>
+        <div class="flag-card" style="--card-color: var(--yellow);">
+          <div class="icon">🔑</div>
+          <h3>Requests for credentials</h3>
+          <p>No legitimate system will ever email you asking to "confirm your password" via a link.</p>
+        </div>
+        <div class="flag-card" style="--card-color: var(--teal);">
+          <div class="icon">🎁</div>
+          <h3>Too good to be true</h3>
+          <p>Surprise bonuses, prizes, or refunds you didn't apply for are a classic bait.</p>
+        </div>
+        <div class="flag-card" style="--card-color: var(--green);">
+          <div class="icon">📎</div>
+          <h3>Unexpected attachments</h3>
+          <p>An invoice, resume, or "signed document" you weren't expecting — especially .zip or .exe files.</p>
+        </div>
+        <div class="flag-card" style="--card-color: var(--coral-dark);">
+          <div class="icon">🔤</div>
+          <h3>Odd spelling &amp; formatting</h3>
+          <p>Awkward grammar, mismatched fonts, or a logo that looks slightly off from the real one.</p>
+        </div>
+      </div>
+
+      <div class="url-compare">
+        <h3>Always check the actual link — not just the label</h3>
+        <div class="url-row">
+          <span class="url-tag real">Real</span>
+          <span>https://<strong>www.ssgc.com.pk/web/</strong></span>
+        </div>
+        <div class="url-row">
+          <span class="url-tag fake">Fake</span>
+          <span>https://<span class="domain-bad">ssgc-verify-account.net</span>/login</span>
+        </div>
+        <div class="url-row">
+          <span class="url-tag fake">Fake</span>
+          <span>https://accounts-ssgc.<span class="domain-bad">secure-update.info</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff;">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag" style="color:var(--teal-dark)">House rules</span>
+        <h2>The do's and don'ts</h2>
+        <p>Simple habits that stop most phishing attempts cold.</p>
+      </div>
+      <div class="rules-grid">
+        <div class="rules-card do">
+          <h3><span class="badge">✓</span> Do</h3>
+          <ul>
+            <li>Hover over links to preview the real URL before clicking</li>
+            <li>Type your organization's website address directly into the browser</li>
+            <li>Verify unusual requests by phone or in person with the sender</li>
+            <li>Report suspicious emails, even if you're not fully sure</li>
+            <li>Keep your device's software and antivirus up to date</li>
+          </ul>
+        </div>
+        <div class="rules-card dont">
+          <h3><span class="badge">✕</span> Don't</h3>
+          <ul>
+            <li>Click links or open attachments from unknown senders</li>
+            <li>Enter your username or password after clicking an email link</li>
+            <li>Reuse your work password on other websites</li>
+            <li>Forward suspicious emails to coworkers "just to check"</li>
+            <li>Assume a familiar logo means the email is genuine</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag" style="color:var(--orange-dark)">Already clicked?</span>
+        <h2>What to do next</h2>
+        <p>If you clicked a suspicious link or entered your details, act fast — in this order.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num"></div>
+          <div>
+            <h3>Don't enter anything else</h3>
+            <p>If a page asks for your password, don't type it — close the tab immediately.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div>
+            <h3>Disconnect if you already entered credentials</h3>
+            <p>Disconnect your device from the network and contact IT Security right away.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div>
+            <h3>Report the email</h3>
+            <p>Forward it to the security team using the address below — don't delete it first.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div>
+            <h3>Change your password</h3>
+            <p>If you entered your credentials anywhere, change your password immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="report" style="padding-top:20px;">
+    <div class="wrap">
+      <div class="report">
+        <h2>See something suspicious?</h2>
+        <p>Report this email to the NCCIA helpline. Reporting takes 30 seconds and helps protect everyone.</p>
+        <span class="contact">1799</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><span class="brand">SSGC</span> Cyber Awareness Campaign — this page is part of an internal security training exercise.</p>
+  </div>
+</footer>
+
+</body>
+</html>
